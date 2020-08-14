@@ -7,8 +7,6 @@
 - Deadline : 17/08/2020, 10h00
 - Form : https://docs.google.com/spreadsheets/d/15L9ltD_QdwpBJslozFXJYxKxjXsy0DjJW6zTThMIg0g/edit?usp=sharing
 
-<img src="../../../../../Assets/data.png" width="400">
-
 ## Objectives
 
 This consolidation challenge will help you assess your ability to solve a problem inspired from real-life situations using your new javascript muscles involving the following know-hows :
@@ -19,8 +17,6 @@ This consolidation challenge will help you assess your ability to solve a proble
 - **problem-solving** : design a logical solution to implement the expected result
 - Debugging using the console
 - Understand the notion of **"separation of concerns"**
-
-![Droid](../../../../../Assets/droid2.gif)
 
 ## Your mission
 
@@ -87,5 +83,3 @@ You can help each other under these two conditions:
 - The person helping **does not provide a ready-made code** and **does not code for the other**. The objective remains to learn, not to solve. The result is less important than the path. Helps by asking questions, trying to get the other person to find the answer on their own.
 
 ## Good luck !
-
-![good luck](../../../../../Assets/goodLuck2.gif)
