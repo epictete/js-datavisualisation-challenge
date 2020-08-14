@@ -9,15 +9,33 @@ const table2Head = table2.getElementsByTagName("thead")[0];
 const table2Body = table2.getElementsByTagName("tbody")[0];
 const table2Row = table2Body.getElementsByTagName("tr");
 
+const table3 = document.getElementById("bodyContent");
+
+const instructions =
+  "Click on a country's name to display/hide its data on the chart";
+
 // Canvas
 
-function addCanvas(elementRef, index) {
+const addCanvas = (elementRef, index, height, caption) => {
   let canvas = document.createElement("canvas");
   canvas.setAttribute("id", "myChart" + index);
+  canvas.setAttribute("height", height);
   elementRef.before(canvas);
-}
-addCanvas(table1, 1);
-addCanvas(table2, 2);
+  if (caption != undefined) {
+    let newElement = document.createElement("p");
+    newElement.setAttribute(
+      "style",
+      "text-align: center; font-size: 14px; font-style: italic"
+    );
+    let newContent = document.createTextNode(caption);
+    newElement.appendChild(newContent);
+    elementRef.before(newElement);
+  }
+  return canvas.getAttribute("id");
+};
+addCanvas(table1, 1, 200, instructions);
+addCanvas(table2, 2, 200, instructions);
+addCanvas(table3, 3);
 
 // Create chartLabels
 
@@ -54,8 +72,7 @@ for (let i = 0; i < table2Row.length; i++) {
 let datasets1 = [];
 let datasets2 = [];
 
-let hoverBorderWidth = 1;
-let hoverBorderColor = "#000";
+let hidden = true;
 let backgroundColor = [
   "maroon",
   "crimson",
@@ -97,18 +114,11 @@ let backgroundColor = [
 // dataElement class
 
 class dataElement {
-  constructor(
-    label,
-    data,
-    backgroundColor,
-    hoverBorderWidth,
-    hoverBorderColor
-  ) {
+  constructor(label, data, backgroundColor, hidden) {
     this.label = label;
     this.data = data;
     this.backgroundColor = backgroundColor;
-    this.hoverBorderWidth = hoverBorderWidth;
-    this.hoverBorderColor = hoverBorderColor;
+    this.hidden = hidden;
   }
 }
 
@@ -119,8 +129,7 @@ for (i = 0; i < countryLabel1.length; i++) {
     countryLabel1[i],
     countryData1[i],
     backgroundColor[i],
-    hoverBorderWidth,
-    hoverBorderColor
+    hidden
   );
   datasets1.push(newElement);
 }
@@ -130,10 +139,23 @@ for (i = 0; i < countryLabel2.length; i++) {
     countryLabel2[i],
     countryData2[i],
     backgroundColor[i],
-    hoverBorderWidth,
-    hoverBorderColor
+    hidden
   );
   datasets2.push(newElement);
+}
+
+// Filter which countries to display by default
+
+let defaultCountries1 = ["Austria", "Poland", "Portugal"];
+for (let i = 0; i < defaultCountries1.length; i++) {
+  let country = datasets1.filter(el => el.label == defaultCountries1[i]);
+  country[0].hidden = false;
+}
+
+let defaultCountries2 = ["France", "Austria", "Belgium"];
+for (let i = 0; i < defaultCountries2.length; i++) {
+  let country = datasets2.filter(el => el.label == defaultCountries2[i]);
+  country[0].hidden = false;
 }
 
 // Chart variables
@@ -151,7 +173,10 @@ let options1 = {
   },
   legend: {
     display: true,
-    position: "right",
+    position: "bottom",
+    labels: {
+      fontSize: 16,
+    },
   },
 };
 
@@ -168,7 +193,10 @@ let options2 = {
   },
   legend: {
     display: true,
-    position: "right",
+    position: "bottom",
+    labels: {
+      fontSize: 16,
+    },
   },
 };
 
