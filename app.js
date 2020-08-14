@@ -19,9 +19,9 @@ const instructions =
 const addCanvas = (elementRef, index, height, caption) => {
   let canvas = document.createElement("canvas");
   canvas.setAttribute("id", "myChart" + index);
-  canvas.setAttribute("height", height);
   elementRef.before(canvas);
-  if (caption != undefined) {
+  if (caption != undefined && height != undefined) {
+    canvas.setAttribute("height", height);
     let newElement = document.createElement("p");
     newElement.setAttribute(
       "style",
@@ -45,7 +45,9 @@ chartLabels1 = chartLabels1.splice(2, chartLabels1.length);
 let chartLabels2 = table2Head.innerText.split("\t");
 chartLabels2 = chartLabels2.splice(2, chartLabels2.length);
 
-// Create countryData & countryLabel
+let chartLabels3 = [];
+
+// Create countryData & countryLabel & chartData
 
 let countryData1 = [];
 let countryLabel1 = [];
@@ -67,7 +69,9 @@ for (let i = 0; i < table2Row.length; i++) {
   countryLabel2.push(tempCountry.splice(1, 2).toString());
 }
 
-// Chart
+let chartData3 = [];
+
+// Chart variables
 
 let datasets1 = [];
 let datasets2 = [];
@@ -200,6 +204,18 @@ let options2 = {
   },
 };
 
+let data3 = {
+  labels: chartLabels3,
+  datasets: [
+    {
+      label: "Live Chart with dataPoints from External JSON",
+      data: chartData3,
+      backgroundColor: "rgba(84, 153, 199, 0.6)",
+      borderColor: "rgba(84, 153, 199, 0.6)",
+    },
+  ],
+};
+
 // Chart declaration
 
 const ctx1 = document.getElementById("myChart1").getContext("2d");
@@ -215,3 +231,11 @@ const chart2 = new Chart(ctx2, {
   data: data2,
   options: options2,
 });
+
+const ctx3 = document.getElementById("myChart3").getContext("2d");
+const chart3 = new Chart(ctx3, {
+  type: "line",
+  data: data3,
+});
+
+// console.log(Chart.defaults.global);
